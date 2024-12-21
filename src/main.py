@@ -1,7 +1,7 @@
 import psycopg2
 
 def connect_db():
-    with open('credential.txt', 'r') as f:
+    with open('../credential.txt', 'r') as f:
         f = f.read()
         credential: list = f.split('\n')
     conn = psycopg2.connect(
