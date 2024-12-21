@@ -1,12 +1,5 @@
 import psycopg2
 
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "Merhaba, Flask ile giriş sayfası!"
 
 def connect_db():
     with open('../credential.txt', 'r') as f:
@@ -30,7 +23,3 @@ def main():
     conn, cursor = connect_db()
     print("Connected to database")
     close_db(conn, cursor)
-
-if __name__ == "__main__":
-    main()
-    app.run(debug=True)
