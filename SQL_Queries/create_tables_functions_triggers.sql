@@ -277,6 +277,7 @@ CREATE OR REPLACE FUNCTION calculate_most_profitable_item()
     RETURNS TABLE
             (
                 "item id"      INTEGER,
+                "item name"    VARCHAR(100),
                 income         NUMERIC,
                 outcome        NUMERIC,
                 net            NUMERIC,
@@ -287,6 +288,7 @@ $$
 BEGIN
     RETURN QUERY
         SELECT o.item_id                                                                AS "item id",
+               i.name                                                                   AS "item name",
                SUM(p.paid_amount + p.pending_amount)                                    AS Income,
                SUM(o.quantity * a.average_price)                                        AS Outcome,
                SUM((p.paid_amount + p.pending_amount) - (o.quantity * a.average_price)) AS Net,
@@ -294,10 +296,12 @@ BEGIN
                      SUM(o.quantity))                                                   AS Net_Per_Item
         FROM payment AS p,
              orders AS o,
+             item AS i,
              (SELECT item_id, ROUND(AVG(price), 2) AS average_price FROM suppliers_item GROUP BY item_id) AS a
         WHERE p.orders_id = o.order_id
           AND a.item_id = o.item_id
-        GROUP BY o.item_id
+          AND i.item_id = a.Item_ID
+        GROUP BY o.item_id, i.name
         ORDER BY net_per_item DESC;
 END;
 $$ LANGUAGE plpgsql;
@@ -310,9 +314,9 @@ CREATE OR REPLACE FUNCTION get_customer_have_unpaid_amount()
                 customer_id    INTEGER,
                 order_id       INTEGER,
                 payment_id     INTEGER,
-                pending_amount NUMERIC,
-                paid_amount    NUMERIC,
-                total_amount   NUMERIC,
+                pending_amount FLOAT,
+                paid_amount    FLOAT,
+                total_amount   FLOAT,
                 date           DATE
             )
 AS
