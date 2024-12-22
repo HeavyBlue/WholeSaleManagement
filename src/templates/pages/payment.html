@@ -1,0 +1,85 @@
+{% extends "default.html" %}
+{% block content %}
+
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="mb-4">Customer Data Management</h1>
+    <form id="customer-form">
+        <div class="mb-3">
+            <label for="customerSelect" class="form-label">Select Customer</label>
+            <select class="form-select" id="customerSelect" required>
+                <option value="" disabled selected>Choose a customer</option>
+                {% for customer_id in customer_ids %}
+                <option value="{{ customer_id }}">Customer {{ customer_id }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+    <table class="table table-bordered mt-4" id="data-table" style="display: none;">
+        <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#customerSelect").on("change", function () {
+            const customerId = $(this).val();
+            if (customerId) {
+                $.ajax({
+                    url: "/get_data",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({customer_id: customerId}),
+                    success: function (data) {
+                        const tableBody = $("#data-table tbody");
+                        tableBody.empty();
+                        if (data.length > 0) {
+                            $("#data-table").show();
+                            data.forEach(item => {
+                                tableBody.append(`
+                                    <tr>
+                                        <td>${item.item_id}</td>
+                                        <td>${item.item_name}</td>
+                                        <td>
+                                            <input type="number" class="form-control price-input" value="${item.price}" data-item-id="${item.item_id}">
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary update-btn" data-item-id="${item.item_id}">Update</button>
+                                        </td>
+                                    </tr>
+                                `);
+                            });
+                        } else {
+                            $("#data-table").hide();
+                        }
+                    }
+                });
+            }
+        });
+
+        $(document).on("click", ".update-btn", function () {
+            const itemId = $(this).data("item-id");
+            const newPrice = $(`input[data-item-id="${itemId}"]`).val();
+            $.ajax({
+                url: "/update_data",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({item_id: itemId, new_price: newPrice}),
+                success: function (response) {
+                    alert(response.message);
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+{% endblock %}

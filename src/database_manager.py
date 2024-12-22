@@ -58,6 +58,18 @@ class DatabaseManager:
         values: list = self.cursor.fetchall()
         return values
 
+    def get_customer_id_has_unpaid_amount(self) -> list[int]:
+        query: str = f"SELECT customer_id FROM get_customer_have_unpaid_amount();"  # TODO: change to get_customer_has_unpaid_amount() in db.
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+
+    def get_customers_has_unpaid_amount(self) -> list:
+        query: str = f"SELECT * FROM get_customer_have_unpaid_amount();"  # TODO: change to get_customer_has_unpaid_amount() in db.
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+
     def check_customer_debts(self):
         query: str = f"SELECT * FROM show_customers_whose_debts_are_past_due();"
         self.cursor.execute(query)

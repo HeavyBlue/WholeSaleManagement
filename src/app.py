@@ -69,12 +69,13 @@ def create_supplier():
 
 @app.route("/payment")
 def payment():
-    return render_template("pages/create-customer.html")
+    customer_ids = db_manager.get_customer_id_has_unpaid_amount()
+    return render_template("pages/payment.html", customer_ids=customer_ids)
 
 
 @app.route("/buy_item")
 def buy_item():
-    return render_template("pages/create-customer.html")
+    return render_template("pages/buy-item-from-suppliers.html")
 
 
 @app.route("/sell_item")

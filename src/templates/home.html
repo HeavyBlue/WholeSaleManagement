@@ -22,21 +22,23 @@
             <div class="app-content" style="display: list-item; flex-direction: column; min-height: 100vh;">
                 <div class="container-fluid d-flex flex-grow-1 align-items-center">
                     <div class="row g-4 w-100">
+
                         <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
                             <button type="button"
                                     class="btn btn-outline-primary btn-lg mb-3 same-width-button float-lg-end"
                                     onclick="window.location.href='{{ url_for('create_customer') }}'">Create
                                 Customer
                             </button>
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-dark btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('payment') }}'">Payment
                             </button>
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-secondary btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('buy_item') }}'">Buy Item
                             </button>
                         </div>
+
                         <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-secondary btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('monthly_profit') }}'">
                                 Monthly Profit
                             </button>
@@ -44,17 +46,18 @@
                                     onclick="window.location.href='{{ url_for('profitable_item') }}'">Most
                                 Profitable Item
                             </button>
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-dark btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('customer_debts') }}'">
                                 Customer Whose Debt
                             </button>
                         </div>
+
                         <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-dark btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('sell_item') }}'">Sell
                                 Item
                             </button>
-                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button"
+                            <button type="button" class="btn btn-outline-secondary btn-lg mb-3 same-width-button"
                                     onclick="window.location.href='{{ url_for('inventory_control') }}'">
                                 Inventory Control
                             </button>
@@ -62,6 +65,7 @@
                                     onclick="window.location.href='{{ url_for('create_supplier') }}'"> Create Supplier
                             </button>
                         </div>
+
                     </div>
                 </div>
             </div>
