@@ -24,14 +24,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for i in item %}
+                                {% for i in items %}
                                     <tr class="align-middle">
                                         <td>{{ i[0] }}</td>
                                         <td>{{ i[1] }}</td>
                                         <td>{{ i[2] }}</td>
                                         <td>{{ i[3] }}</td>
                                         <td>
-                                            <button class="btn-outline-success">Buy</button>
+                                            <button class="btn btn-outline-success pay-btn" onclick="window.location.href='{{ url_for('buy_item_from_suppliers',  item_id=i[0]) }}'" data-item-id="{{ i[0] }}">Buy</button>
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -40,7 +40,7 @@ class DatabaseManager:
             column_variables.remove("payment_id")
         query_req1: str = ("%s, " * (len(column_variables) - 1))[:-2]
         col_names: str = ','.join(column_variables[1:])
-        add_query = f"INSERT INTO {table_name} ({col_names}) VALUES {query_req1}"
+        add_query = f"INSERT INTO {table_name} ({col_names}) VALUES ({query_req1})"
         self.cursor.execute(add_query, values)
         try:
             self.conn.commit()

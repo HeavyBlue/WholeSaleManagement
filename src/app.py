@@ -74,12 +74,18 @@ def payment():
 
 @app.route("/buy_item")
 def buy_item():
-    return render_template("pages/buy-item-from-suppliers.html")
+    items = db_manager.get_table_values('suppliers_item')
+    return render_template("pages/buy-item-from-suppliers.html", items=items)
 
 
 @app.route("/sell_item")
 def sell_item():
     return render_template("pages/create-customer.html")
+
+
+@app.route("/buy_item_from_suppliers", methods=['POST'])
+def buy_item_from_suppliers():
+    ...
 
 
 @app.route("/inventory_control")
@@ -104,6 +110,20 @@ def update_payment():
     if result:
         return jsonify(["success"])
     return jsonify(["error"])
+
+
+@app.route('/get_customer_data', methods=['POST'])
+def get_customer_data():
+    data = request.get_data()
+    print(data)
+    return jsonify({'message': 'success', 'data': data})
+
+
+@app.route('/update_item_bought', methods=['POST'])
+def update_item_bought():
+    data = request.get_data()
+    print(data)
+    return jsonify({'message': 'success', 'data': data})
 
 
 if __name__ == "__main__":
