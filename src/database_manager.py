@@ -36,6 +36,8 @@ class DatabaseManager:
 
     def add_to_table(self, table_name: str, values: list):
         column_variables = self.get_table_column_name(table_name)
+        if(table_name=="Orders"):
+            column_variables.remove("payment_id")
         query_req1: str = ("%s, " * (len(column_variables) - 1))[:-2]
         col_names: str = ','.join(column_variables[1:])
         add_query = f"INSERT INTO {table_name} ({col_names}) VALUES {query_req1}"
@@ -44,6 +46,7 @@ class DatabaseManager:
             self.conn.commit()
             print("Values added to table")
         except Exception as e:
+            self.conn.rollback()
             print(e)
 
     def get_table_values(self, table_name: str) -> list:

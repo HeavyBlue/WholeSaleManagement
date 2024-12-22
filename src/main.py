@@ -1,47 +1,62 @@
 import psycopg2
+from flask import Flask, request, jsonify, render_template
+from database_manager import DatabaseManager
+import random
+from datetime import datetime
+import time
+db_manager = DatabaseManager()
+def addi(table_name,path):
+    with open(path ,"r") as datas:
+        datas = datas.read().split("\n")
+        lenght = len(datas[0])
+        for i in datas[1:]:
+            values=[]
+            i=i.split(",")
+            for k in range(3):
+                if(k==1):
+                    number = random.randint(40000, 50000)
+                    values.append(number)
+                else:
+                    values.append(i[k])
+            values.append("1")  
+            db_manager.add_to_table(table_name,values)
 
-from flask import Flask, request, jsonify
+def add(table_name,path):
+    with open(path ,"r") as datas:
+        datas = datas.read().split("\n")
+        lenght = len(datas[0])
+        for i in datas[1:]:
+            values=[]
+            i=i.split(",")
+            for k in i[1:]:
+                if(k==""):
+                    values.append("1")
+                else:
+                    values.append(k)
+            db_manager.add_to_table(table_name,values)
 
-app = Flask(__name__)
+def add2(table_name,path):
+    with open(path ,"r") as datas:
+        datas = datas.read().split("\n")
+        lenght = len(datas[0])
+        for i in datas[1:]:
+            time.sleep(0.1)
+            values=[]
+            i=i.split(",")
+            for k in i[1:]:
+                if(k==""):
+                    number = random.randint(1, 100)
+                    values.append(number)
+                else:
+                    if("/" in k):
+                        date_obj = datetime.strptime(k, "%m/%d/%Y")
+                        k = date_obj.strftime("%Y/%m/%d")
+                    values.append(k)
+            db_manager.add_to_table(table_name,values)
 
-@app.route("/")
-def index():
-    conn, cursor = connect_db()
-    cursor.execute("SELECT * FROM test1;")
-    x = cursor.fetchall()
-    close_db(conn, cursor)
-    return str(x)
-
-def connect_db():
-    with open('../credential.txt', 'r') as f:
-        f = f.read()
-        credential: list = f.split('\n')
-    conn = psycopg2.connect(
-        dbname=credential[0],
-        user=credential[1],
-        password=credential[2],
-        host=credential[3],
-        port=credential[4])
-
-    cursor = conn.cursor()
-    return conn, cursor
-
-def close_db(conn, cursor):
-    cursor.close()
-    conn.close()
-
-def main():
-    conn, cursor = connect_db()
-    print("Connected to database")
-    #cursor.execute("SELECT * FROM test1 LIMIT 0;")
-    #colname = [desc[0] for desc in cursor.description]
-    #query = f"INSERT INTO test1 ({", ".join(colname[1:])}) VALUES ({("%s, " * (len(colname) - 1))[:-2]});"
-    #print(query)
-    #cursor.execute(query, ("test1".strip(), "11010101", "15"))
-    #conn.commit()
-    cursor.execute("SELECT * FROM test1;")
-
-    close_db(conn, cursor)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+addi("Item","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/item.csv")
+add("Supplier","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/Supplier Table.csv")
+add2("Suppliers_Item","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/Suppliers_Item.csv")
+add2("Inbound_Items","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/Inbound_Items Table.csv")
+add("Customer","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/Customer Table.csv")
+add2("Orders","/home/heavyblue/Desktop/dbms/WholeSaleManagement/Data/Orders Table.csv")
