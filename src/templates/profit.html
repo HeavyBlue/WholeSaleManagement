@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Most Profitable Item</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .most-profitable {
+      background-color: #d1e7dd;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="display-4">Product Profit Analysis</h1>
+      <p class="lead">Highlighting the most profitable item in the list.</p>
+      {% for i in item %}
+      <span>{{ i }}</span>
+      {% endfor %}
+      
+    </div>
+
+
+  
+<!--
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Profit ($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Product A</td>
+            <td>Electronics</td>
+            <td>1200</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Product B</td>
+            <td>Furniture</td>
+            <td>800</td>
+          </tr>
+          <tr class="most-profitable">
+            <td>3</td>
+            <td>Product C</td>
+            <td>Appliances</td>
+            <td>1500</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Product D</td>
+            <td>Clothing</td>
+            <td>600</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
