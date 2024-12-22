@@ -336,3 +336,29 @@ BEGIN
           AND P.Payment_Status = 'Pending';
 END;
 $$ LANGUAGE plpgsql;
+
+-- Function: get_suppliers_item_info
+CREATE OR REPLACE FUNCTION get_suppliers_item_info(supp_item_ids INTEGER)
+    RETURNS TABLE
+            (
+                supp_item_id INTEGER,
+                supp_id      INTEGER,
+                supp_name    VARCHAR(100),
+                item_name    VARCHAR(100),
+                quantity     INTEGER,
+                sell_price   NUMERIC,
+                buy_price    INTEGER
+            )
+AS
+$$
+BEGIN
+    RETURN QUERY
+        SELECT si.Supp_Item_ID, si.Supplier_ID, s.First_Name, i.Name, i.Quantity, i.Price, si.Price
+        FROM suppliers_item AS si,
+             supplier AS s,
+             item AS i
+        WHERE si.supp_item_id = supp_item_ids
+          AND si.supplier_id = s.supplier_id
+          AND si.item_id = i.item_id;
+END;
+$$ LANGUAGE plpgsql;

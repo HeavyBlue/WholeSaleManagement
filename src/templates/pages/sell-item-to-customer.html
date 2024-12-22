@@ -1,0 +1,60 @@
+{% extends "default.html" %}
+{% block content %}
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="height: 100%;">
+    <div class="app-wrapper">
+        <main class="app-main">
+            <div class="app-content"
+                 style="display: flex; justify-content: center; align-items: start; min-height: 100vh;">
+                <div class="align-items-start">
+                    <div class="card card-info card-outline mb-5 d-flex">
+                        <div class="card-header">
+                            <div class="card-title">Customer</div>
+                        </div>
+                        <form action="/create_order" method="post">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="customerSelect" class="form-label">Select Customer</label>
+                                        <select class="form-select" id="customerSelect" name="customerSelect" required>
+                                            <option value="" disabled selected>Choose a customer</option>
+                                            {% for customer_id in customer_ids %}
+                                                <option value="{{ customer_id[0] }}">Id: {{ customer_id[0] }}, Name: {{ customer_id[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="itemSelect" class="form-label">Select Item</label>
+                                        <select class="form-select" id="itemSelect" name="itemSelect" required>
+                                            <option value="" disabled selected>Choose a customer</option>
+                                            {% for item in items %}
+                                                <option value="{{ item[0] }}">{{ item[1] }}, Price: {{ item[2] }} USD</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="quantity" class="form-label">How many would you like to buy?</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity"
+                                               value="0" required>
+                                    </div>
+                                    <label for="supp_item_id_hidden" class="form-label" hidden="hidden"></label>
+                                    <input type="hidden" id="supp_item_id_hidden" name="supp_item_id"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-info" type="submit">Submit form</button>
+                            </div>
+                        </form>
+                        <div class="card-footer">
+                            <a href="/home" class="btn btn-danger">Geri</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </body>
+
+
+{% endblock %}

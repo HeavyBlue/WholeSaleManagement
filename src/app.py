@@ -80,13 +80,16 @@ def buy_item():
 
 @app.route("/sell_item")
 def sell_item():
-    return render_template("pages/create-customer.html")
+    customer_ids = db_manager.get_customer_id_first_name()
+    items = db_manager.get_item_id_name_price()
+    return render_template("pages/sell-item-to-customer.html", customer_ids=customer_ids, items=items)
 
 
-@app.route("/buy_item_from_suppliers", methods=['POST'])
+@app.route("/buy_item_from_suppliers")
 def buy_item_from_suppliers():
-    ...
-
+    supp_item_id = request.args.get('supp_item_id')
+    item = db_manager.get_suppliers_item_info(int(supp_item_id))
+    return render_template("pages/supp-items-buy.html", item=item[0])
 
 @app.route("/inventory_control")
 def inventory_control():
@@ -98,15 +101,14 @@ def get_data():
     data = request.json.get("customer_id")
     customer = db_manager.get_customers_has_unpaid_amount(data)
     customer = [list(map(str, row)) for row in customer]
-    print(customer)
     return jsonify(customer)
 
 
 @app.route("/update_payment", methods=["POST"])
 def update_payment():
     data = request.json
+    print(data)
     result = db_manager.payment(data["payment_id"], data["payment_value"])
-
     if result:
         return jsonify(["success"])
     return jsonify(["error"])
@@ -115,15 +117,24 @@ def update_payment():
 @app.route('/get_customer_data', methods=['POST'])
 def get_customer_data():
     data = request.get_data()
-    print(data)
     return jsonify({'message': 'success', 'data': data})
 
 
 @app.route('/update_item_bought', methods=['POST'])
 def update_item_bought():
-    data = request.get_data()
-    print(data)
-    return jsonify({'message': 'success', 'data': data})
+    supp_item_id = request.form.get("supp_item_id")
+    quantity = request.form.get("quantity")
+    db_manager.buy_item(int(supp_item_id), int(quantity))
+    return quantity
+
+
+@app.route('/create_order', methods=['POST'])
+def create_order():
+    customer_id = request.form.get("customerSelect")
+    item_id = request.form.get("itemSelect")
+    quantity = request.form.get("quantity")
+    db_manager.sell_item(int(item_id), int(quantity), int(customer_id))
+    return render_template('pages/success.html')
 
 
 if __name__ == "__main__":

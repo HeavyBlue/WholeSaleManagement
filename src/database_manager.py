@@ -55,6 +55,12 @@ class DatabaseManager:
         values: list = self.cursor.fetchall()
         return values
 
+    def get_customer_id_first_name(self) -> list:
+        get_query: str = f"SELECT customer_id, first_name FROM customer;"
+        self.cursor.execute(get_query)
+        values: list = self.cursor.fetchall()
+        return values
+
     def most_profitable(self):
         query: str = f"SELECT * FROM calculate_most_profitable_item();"
         self.cursor.execute(query)
@@ -91,15 +97,27 @@ class DatabaseManager:
         values: list = self.cursor.fetchall()
         return values
 
+    def get_item_id_name_price(self):
+        query: str = f"SELECT item_id, name, price FROM Item;"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+
     def sell_item(self, item_id: int, quantity: int, customer_id: int):
-        self.add_to_table("Orders", [customer_id, item_id, quantity])
+        self.add_to_table("Orders", [item_id, customer_id, quantity])
 
     def buy_item(self, supp_item_id: int, quantity: int):
         date = datetime.datetime.now().strftime("%Y-%m-%d")
         self.add_to_table("Inbound_Items", [supp_item_id, quantity, date])
 
-    def payment(self, payment_id: int, paid_amount: int):
-        query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {int(paid_amount)}, Pending_Amount = Pending_Amount-{int(paid_amount)} WHERE payment_id = {int(payment_id)};"
+    def get_suppliers_item_info(self, supp_item_id: int) -> list:
+        query: str = f"SELECT * FROM get_suppliers_item_info({supp_item_id});"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+
+    def payment(self, payment_id: int, paid_amount: float):
+        query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {float(paid_amount)}, Pending_Amount = Pending_Amount-{float(paid_amount)} WHERE payment_id = {int(payment_id)};"
         try:
             self.cursor.execute(query)
             self.conn.commit()

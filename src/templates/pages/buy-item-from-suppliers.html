@@ -34,7 +34,7 @@
                                         <td>{{ i[2] }}</td>
                                         <td>{{ i[3] }}</td>
                                         <td>
-                                            <button class="btn btn-outline-success pay-btn" onclick="window.location.href='{{ url_for('buy_item_from_suppliers',  item_id=i[0]) }}'" data-item-id="{{ i[0] }}">Buy</button>
+                                            <button class="btn btn-outline-success pay-btn" onclick="window.location.href='{{ url_for('buy_item_from_suppliers',  supp_item_id=i[0]) }}'" data-item-id="{{ i[0] }}">Buy</button>
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -58,7 +58,7 @@
                                         <td>${item[4]}</td>
                                         <td>${item[5]}</td>
                                         <td>${item[6]}</td>
-                                        <td><input type="number" class="form-control price input" value=0 data-item-id="7"></td>
+                                        <td><input type="text" class="form-control price input" value=0 data-item-id="${item[2]}"></td>
                                         <td>
                                             <button class="btn btn-primary pay-btn" data-item-id="${item[2]}">Payment</button>
                                         </td>
@@ -75,7 +75,7 @@
 
             $(document).on("click", ".pay-btn", function () {
                 const paymentID = $(this).data("item-id");
-                const paymentValue = $(`input[data-item-id="7"]`).val();
+                const paymentValue = $(`input[data-item-id="${paymentID}"]`).val();
                 $.ajax({
                     url: "/update_payment",
                     method: "POST",
