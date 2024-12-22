@@ -36,7 +36,7 @@ class DatabaseManager:
 
     def add_to_table(self, table_name: str, values: list):
         column_variables = self.get_table_column_name(table_name)
-        if(table_name=="Orders"):
+        if table_name == "Orders":
             column_variables.remove("payment_id")
         query_req1: str = ("%s, " * (len(column_variables) - 1))[:-2]
         col_names: str = ','.join(column_variables[1:])
@@ -67,7 +67,7 @@ class DatabaseManager:
         values: list = self.cursor.fetchall()
         return values
 
-    def get_customers_has_unpaid_amount(self,customer_id) -> list:
+    def get_customers_has_unpaid_amount(self, customer_id) -> list:
         query: str = f"SELECT * FROM get_customer_have_unpaid_amount() WHERE customer_id = {customer_id} order by customer_id , order_id;"  # TODO: change to get_customer_has_unpaid_amount() in db.
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()

@@ -1,7 +1,5 @@
 from database_manager import DatabaseManager
-from decimal import Decimal
-from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, request,jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 
 db_manager = DatabaseManager()
 
@@ -43,7 +41,7 @@ def logout():
 @app.route("/customer_debts")
 def customer_debts():
     customers = db_manager.check_customer_debts()
-    return render_template("/pages/customer-debt.html", customers=customers)
+    return render_template("pages/customer-debt.html", customers=customers)
 
 
 @app.route("/monthly_profit")
@@ -88,7 +86,8 @@ def sell_item():
 def inventory_control():
     return render_template("pages/inventory.html")
 
-@app.route("/get_data",methods=["POST"])
+
+@app.route("/get_data", methods=["POST"])
 def get_data():
     data = request.json.get("customer_id")
     customer = db_manager.get_customers_has_unpaid_amount(data)
@@ -96,13 +95,16 @@ def get_data():
     print(customer)
     return jsonify(customer)
 
-@app.route("/update_payment",methods=["POST"])
+
+@app.route("/update_payment", methods=["POST"])
 def update_payment():
     data = request.json
-    result = db_manager.payment(data["payment_id"],data["payment_value"])
-    
+    result = db_manager.payment(data["payment_id"], data["payment_value"])
+
     if result:
         return jsonify(["success"])
     return jsonify(["error"])
+
+
 if __name__ == "__main__":
     app.run(debug=True)

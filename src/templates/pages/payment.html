@@ -1,55 +1,55 @@
 {% extends "default.html" %}
 {% block content %}
 
-<body class="bg-light">
-<div class="container mt-5">
-    <h1 class="mb-4">Customer Data Management</h1>
-    <form id="customer-form">
-        <div class="mb-3">
-            <label for="customerSelect" class="form-label">Select Customer</label>
-            <select class="form-select" id="customerSelect" required>
-                <option value="" disabled selected>Choose a customer</option>
-                {% for customer_id in customer_ids %}
-                <option value="{{ customer_id[0] }}">Customer {{ customer_id[0] }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
-    <table class="table table-bordered mt-4" id="data-table" style="display: none;">
-        <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>Order ID</th>
-            <th>Payment ID</th>
-            <th>Pending Amount</th>
-            <th>Paid Amount</th>
-            <th>Total Amount</th>
-            <th>Date</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+    <body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4">Customer Data Management</h1>
+        <form id="customer-form">
+            <div class="mb-3">
+                <label for="customerSelect" class="form-label">Select Customer</label>
+                <select class="form-select" id="customerSelect" required>
+                    <option value="" disabled selected>Choose a customer</option>
+                    {% for customer_id in customer_ids %}
+                        <option value="{{ customer_id[0] }}">Customer {{ customer_id[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        <table class="table table-bordered mt-4" id="data-table" style="display: none;">
+            <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>Order ID</th>
+                <th>Payment ID</th>
+                <th>Pending Amount</th>
+                <th>Paid Amount</th>
+                <th>Total Amount</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
 
-<script>
-    $(document).ready(function () {
-        $("#customerSelect").on("change", function () {
-            const customerId = $(this).val();
-            if (customerId) {
-                $.ajax({
-                    url: "/get_data",
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({customer_id: customerId}),
-                    success: function (data) {
-                        const tableBody = $("#data-table tbody");
-                        tableBody.empty();
-                        if (data.length > 0) {
-                            $("#data-table").show();
-                            data.forEach(item => {
-                                tableBody.append(`
+    <script>
+        $(document).ready(function () {
+            $("#customerSelect").on("change", function () {
+                const customerId = $(this).val();
+                if (customerId) {
+                    $.ajax({
+                        url: "/get_data",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({customer_id: customerId}),
+                        success: function (data) {
+                            const tableBody = $("#data-table tbody");
+                            tableBody.empty();
+                            if (data.length > 0) {
+                                $("#data-table").show();
+                                data.forEach(item => {
+                                    tableBody.append(`
                                     <tr>
                                         <td>${item[0]}</td>
                                         <td>${item[1]}</td>
@@ -64,30 +64,30 @@
                                         </td>
                                     </tr>
                                 `);
-                            });
-                        } else {
-                            $("#data-table").hide();
+                                });
+                            } else {
+                                $("#data-table").hide();
+                            }
                         }
-                    }
-                });
-            }
-        });
-
-        $(document).on("click", ".pay-btn", function () {
-            const paymentID = $(this).data("item-id");
-            const paymentValue = $(`input[data-item-id="7"]`).val();
-            $.ajax({
-                url: "/update_payment",
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({payment_id: paymentID, payment_value: paymentValue}),
-                success: function (response) {
-                    alert(response.message);
+                    });
                 }
             });
+
+            $(document).on("click", ".pay-btn", function () {
+                const paymentID = $(this).data("item-id");
+                const paymentValue = $(`input[data-item-id="7"]`).val();
+                $.ajax({
+                    url: "/update_payment",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({payment_id: paymentID, payment_value: paymentValue}),
+                    success: function (response) {
+                        alert(response.message);
+                    }
+                });
+            });
         });
-    });
-</script>
-</body>
+    </script>
+    </body>
 
 {% endblock %}
