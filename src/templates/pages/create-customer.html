@@ -2,6 +2,7 @@
 {% block content %}
 
     <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="overflow: hidden; height: 100%;">
+
     <div class="app-wrapper">
         <main class="app-main">
             <div class="app-content"
@@ -11,6 +12,7 @@
                         <div class="card-header">
                             <div class="card-title">Customer</div>
                         </div> <!--end::Header--> <!--begin::Form-->
+                       
                         <form class="needs-validation" novalidate=""> <!--begin::Body-->
                             <div class="card-body"> <!--begin::Row-->
                                 <div class="row g-3"> <!--begin::Col-->
@@ -57,7 +59,11 @@
                             <div class="card-footer">
                                 <button class="btn btn-info" type="submit">Submit form</button>
                             </div> <!--end::Footer-->
+                           
                         </form> <!--end::Form--> <!--begin::JavaScript-->
+                        <div class="card-footer">
+                            <a href="/home" class="btn btn-danger">Geri</a>
+                        </div>
                         <script>
                             (() => {
                                 "use strict";
