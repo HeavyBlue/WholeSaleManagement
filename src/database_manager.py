@@ -50,3 +50,19 @@ class DatabaseManager:
         self.cursor.execute(get_query)
         values: list = self.cursor.fetchall()
         return values
+    def most_profitable(self):
+        query: str = f"SELECT * FROM calculate_monthly_profit();"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+    def check_customer_debts(self):
+        query: str = f"SELECT * FROM show_customers_whose_debts_are_past_due();"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+    def monthly_profit(self):
+        query: str = f"SELECT * FROM calculate_monthly_profit();"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+
