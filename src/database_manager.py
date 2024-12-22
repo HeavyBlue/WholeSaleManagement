@@ -1,5 +1,5 @@
 import psycopg2
-
+import datetime
 
 class DatabaseConnection:
     def __init__(self):
@@ -65,4 +65,18 @@ class DatabaseManager:
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
-
+    def check_items(self):
+        query: str = f"SELECT * FROM Item;"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
+    def sell_item(self, item_id: int, quantity: int, customer_id: int):
+        self.add_to_table("Orders", [customer_id, item_id, quantity])
+    def buy_item(self,supp_item_id: int, quantity: int):
+        date = datetime.datetime.now().strftime("%Y-%m-%d")
+        self.add_to_table("Inbound_Items", [supp_item_id, quantity, date])
+    def payment(self,paid_amount: int, customer_id: int):
+        query = f"UPDATE Payment SET Paid_amount = Paid_amount + {paid_amount}, Pending_amount = Pending_amount-{paid_amount} WHERE Customer_ID = {customer_id};"
+        self.cursor.execute(query)
+    def add_customer(self, name: str, second_name: str, address: str, phone: str, email: str, image: str):
+        self.add_to_table("Customer", [name, second_name, address, phone, email, image])
