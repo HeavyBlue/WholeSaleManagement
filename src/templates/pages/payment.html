@@ -10,7 +10,7 @@
             <select class="form-select" id="customerSelect" required>
                 <option value="" disabled selected>Choose a customer</option>
                 {% for customer_id in customer_ids %}
-                <option value="{{ customer_id }}">Customer {{ customer_id }}</option>
+                <option value="{{ customer_id[0] }}">Customer {{ customer_id[0] }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -18,15 +18,20 @@
     <table class="table table-bordered mt-4" id="data-table" style="display: none;">
         <thead>
         <tr>
-            <th>Item ID</th>
-            <th>Item Name</th>
-            <th>Price</th>
+            <th>Customer ID</th>
+            <th>Order ID</th>
+            <th>Payment ID</th>
+            <th>Pending Amount</th>
+            <th>Paid Amount</th>
+            <th>Total Amount</th>
+            <th>Date</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody></tbody>
     </table>
 </div>
+
 
 <script>
     $(document).ready(function () {
@@ -46,13 +51,16 @@
                             data.forEach(item => {
                                 tableBody.append(`
                                     <tr>
-                                        <td>${item.item_id}</td>
-                                        <td>${item.item_name}</td>
+                                        <td>${item[0]}</td>
+                                        <td>${item[1]}</td>
+                                        <td>${item[2]}</td>
+                                        <td>${item[3]}</td>
+                                        <td>${item[4]}</td>
+                                        <td>${item[5]}</td>
+                                        <td>${item[6]}</td>
+                                        <td><input type="number" class="form-control price input" value=0 data-item-id="7"></td>
                                         <td>
-                                            <input type="number" class="form-control price-input" value="${item.price}" data-item-id="${item.item_id}">
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary update-btn" data-item-id="${item.item_id}">Update</button>
+                                            <button class="btn btn-primary pay-btn" data-item-id="${item[2]}">Payment</button>
                                         </td>
                                     </tr>
                                 `);
@@ -65,14 +73,14 @@
             }
         });
 
-        $(document).on("click", ".update-btn", function () {
-            const itemId = $(this).data("item-id");
-            const newPrice = $(`input[data-item-id="${itemId}"]`).val();
+        $(document).on("click", ".pay-btn", function () {
+            const paymentID = $(this).data("item-id");
+            const paymentValue = $(`input[data-item-id="7"]`).val();
             $.ajax({
-                url: "/update_data",
+                url: "/update_payment",
                 method: "POST",
                 contentType: "application/json",
-                data: JSON.stringify({item_id: itemId, new_price: newPrice}),
+                data: JSON.stringify({payment_id: paymentID, payment_value: paymentValue}),
                 success: function (response) {
                     alert(response.message);
                 }

@@ -4,24 +4,26 @@
     <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="overflow: hidden; height: 100%;">
     <div class="app-wrapper">
         <main class="app-main">
-            <h1 style="align-self: center">Most Profitable Item</h1>
+            <h1 style="align-self: center">Customer Whose Debt</h1>
             <div class="app-content"
                  style="display: flex; justify-content: center; align-items: start; min-height: 100vh;">
                 <div class="align-items-start" style="width: 70%;">
                     <div class="card mb-xxl-5">
                         <div class="card-header">
-                            <h3 class="card-title">Most Profitable Item</h3>
+                            <h3 class="card-title">Customer Whose Debt</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Item Name</th>
-                                    <th>Income</th>
-                                    <th>Outcome</th>
-                                    <th>Net</th>
-                                    <th>Net Per Item</th>
+                                    <th>Order ID</th>
+                                    <th>First Name</th>
+                                    <th>Second Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Image</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,6 +35,8 @@
                                         <td>{{ i[3] }}</td>
                                         <td>{{ i[4] }}</td>
                                         <td>{{ i[5] }}</td>
+                                        <td>{{ i[6] }}</td>
+                                        <td>{{ i[7] }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

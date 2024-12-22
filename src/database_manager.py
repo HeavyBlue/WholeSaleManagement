@@ -56,19 +56,19 @@ class DatabaseManager:
         return values
 
     def most_profitable(self):
-        query: str = f"SELECT * FROM calculate_monthly_profit();"
+        query: str = f"SELECT * FROM calculate_most_profitable_item();"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
 
     def get_customer_id_has_unpaid_amount(self) -> list[int]:
-        query: str = f"SELECT customer_id FROM get_customer_have_unpaid_amount();"  # TODO: change to get_customer_has_unpaid_amount() in db.
+        query: str = f"SELECT customer_id FROM get_customer_have_unpaid_amount() group by customer_id order by customer_id;"  # TODO: change to get_customer_has_unpaid_amount() in db.
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
 
-    def get_customers_has_unpaid_amount(self) -> list:
-        query: str = f"SELECT * FROM get_customer_have_unpaid_amount();"  # TODO: change to get_customer_has_unpaid_amount() in db.
+    def get_customers_has_unpaid_amount(self,customer_id) -> list:
+        query: str = f"SELECT * FROM get_customer_have_unpaid_amount() WHERE customer_id = {customer_id} order by customer_id , order_id;"  # TODO: change to get_customer_has_unpaid_amount() in db.
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
@@ -98,9 +98,14 @@ class DatabaseManager:
         date = datetime.datetime.now().strftime("%Y-%m-%d")
         self.add_to_table("Inbound_Items", [supp_item_id, quantity, date])
 
-    def payment(self, paid_amount: int, customer_id: int):
-        query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {paid_amount}, Pending_Amount = Pending_Amount-{paid_amount} WHERE Customer_ID = {customer_id};"
-        self.cursor.execute(query)
+    def payment(self, payment_id: int, paid_amount: int):
+        query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {int(paid_amount)}, Pending_Amount = Pending_Amount-{int(paid_amount)} WHERE payment_id = {int(payment_id)};"
+        try:
+            self.cursor.execute(query)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            return e
 
     def get_pending_amount(self, customer_id: int):
         query = f"SELECT Pending_Amount FROM Payment WHERE Customer_ID = {customer_id};"
