@@ -50,38 +50,57 @@ class DatabaseManager:
         self.cursor.execute(get_query)
         values: list = self.cursor.fetchall()
         return values
+    
     def most_profitable(self):
         query: str = f"SELECT * FROM calculate_monthly_profit();"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+    
     def check_customer_debts(self):
         query: str = f"SELECT * FROM show_customers_whose_debts_are_past_due();"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+    
     def monthly_profit(self):
         query: str = f"SELECT * FROM calculate_monthly_profit();"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+    
     def check_items(self):
         query: str = f"SELECT * FROM Item;"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+    
     def sell_item(self, item_id: int, quantity: int, customer_id: int):
         self.add_to_table("Orders", [customer_id, item_id, quantity])
+    
     def buy_item(self,supp_item_id: int, quantity: int):
         date = datetime.datetime.now().strftime("%Y-%m-%d")
         self.add_to_table("Inbound_Items", [supp_item_id, quantity, date])
+    
     def payment(self,paid_amount: int, customer_id: int):
         query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {paid_amount}, Pending_Amount = Pending_Amount-{paid_amount} WHERE Customer_ID = {customer_id};"
         self.cursor.execute(query)
+    
     def get_pending_amount(self, customer_id: int):
         query = f"SELECT Pending_Amount FROM Payment WHERE Customer_ID = {customer_id};"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+    
     def add_customer(self, name: str, second_name: str, address: str, phone: str, email: str, image: str):
         self.add_to_table("Customer", [name, second_name, address, phone, email, image])
+
+    def login(self,customerid: int):
+        query = f"SELECT Customer_ID FROM Customer WHERE Customer_ID = {customerid};"
+        self.cursor.execute(query)
+        if(self.cursor.fetchall()):
+            return True
+        else:
+            return False
+
+
