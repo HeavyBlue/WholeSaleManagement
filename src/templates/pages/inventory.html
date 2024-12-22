@@ -1,0 +1,46 @@
+{% extends "default.html" %}
+{% block content %}
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="overflow: hidden; height: 100%;">
+    <div class="app-wrapper">
+        <main class="app-main">
+            <h1 style="align-self: center">Inventory</h1>
+            <div class="app-content"
+                 style="display: flex; justify-content: center; align-items: start; min-height: 100vh;">
+                <div class="align-items-start" style="width: 70%;">
+                    <div class="card mb-xxl-5">
+                        <div class="card-header">
+                            <h3 class="card-title">Item List</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in item %}
+                                    <tr class="align-middle">
+                                        <td>{{ i[0] }}</td>
+                                        <td>{{ i[1] }}</td>
+                                        <td>{{ i[2] }}</td>
+                                        <td>{{ i[3] }}</td>
+                                        <td>{{ i[4] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </body>
+
+{% endblock %}
