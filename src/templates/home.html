@@ -1,4 +1,59 @@
 {% extends "default.html" %}
 {% block content %}
 
+    <style>
+        .same-width-button {
+            width: 100%;
+            max-width: 300px;
+            height: 30%;
+            max-height: 300px;
+            min-height: 200px;
+            min-width: 100px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="overflow: hidden; height: 100%;">
+    <div class="app-wrapper">
+        <main class="app-main">
+            <div class="app-content" style="display: list-item; flex-direction: column; min-height: 100vh;">
+                <div class="container-fluid d-flex flex-grow-1 align-items-center">
+                    <div class="row g-4 w-100">
+                        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button float-lg-end">Create
+                                Customer or Supplier
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button" >Payment
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">Buy Item
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">Sell
+                                Item
+                            </button>
+                        </div>
+
+                        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">
+                                Monthly Profit
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">Most
+                                Profitable Item
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">
+                                Customer Whose Debt
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg mb-3 same-width-button">
+                                Inventory Control
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </body>
+
 {% endblock %}
