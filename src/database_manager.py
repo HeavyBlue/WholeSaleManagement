@@ -76,7 +76,12 @@ class DatabaseManager:
         date = datetime.datetime.now().strftime("%Y-%m-%d")
         self.add_to_table("Inbound_Items", [supp_item_id, quantity, date])
     def payment(self,paid_amount: int, customer_id: int):
-        query = f"UPDATE Payment SET Paid_amount = Paid_amount + {paid_amount}, Pending_amount = Pending_amount-{paid_amount} WHERE Customer_ID = {customer_id};"
+        query = f"UPDATE Payment SET Paid_Amount = Paid_Amount + {paid_amount}, Pending_Amount = Pending_Amount-{paid_amount} WHERE Customer_ID = {customer_id};"
         self.cursor.execute(query)
+    def get_pending_amount(self, customer_id: int):
+        query = f"SELECT Pending_Amount FROM Payment WHERE Customer_ID = {customer_id};"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
     def add_customer(self, name: str, second_name: str, address: str, phone: str, email: str, image: str):
         self.add_to_table("Customer", [name, second_name, address, phone, email, image])
