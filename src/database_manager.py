@@ -37,7 +37,9 @@ class DatabaseManager:
     def add_to_table(self, table_name: str, values: list):
         column_variables = self.get_table_column_name(table_name)
         if table_name == "Orders":
-            column_variables.remove("payment_id")
+            if "payment_id" in column_variables:
+                column_variables.remove("payment_id")
+        print(column_variables,values)
         query_req1: str = ("%s, " * (len(column_variables) - 1))[:-2]
         col_names: str = ','.join(column_variables[1:])
         add_query = f"INSERT INTO {table_name} ({col_names}) VALUES ({query_req1})"
