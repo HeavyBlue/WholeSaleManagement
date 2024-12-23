@@ -1,0 +1,50 @@
+{% extends "default.html" %}
+{% block content %}
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="height: 100%;">
+    <div class="app-wrapper">
+        <main class="app-main">
+            <div class="app-content"
+                 style="display: flex; justify-content: center; align-items: start; min-height: 100vh;">
+                <div class="align-items-start">
+                    <div class="card card-info card-outline mb-5 d-flex">
+                        <div class="card-header">
+                            <div class="card-title">Customer</div>
+                        </div>
+                        <form>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="supp_item_id" class="form-label">Item's ID</label>
+                                        <input type="number" class="form-control" id="supp_item_id" value="{{ item[0] }}" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="supp_id" class="form-label">Item Name</label>
+                                        <input type="text" class="form-control" id="supp_id" name="supp_id" value="{{ item[1] }}" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="supplier_name" class="form-label">Item Quantity</label>
+                                        <input type="number" class="form-control" id="supplier_name" name="supplier_name" value="{{ item[2] }}" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="item_name" class="form-label">Item Price</label>
+                                        <input type="number" class="form-control" id="item_name" name="item_name" value="{{ item[3] }}" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="{{ url_for('get_photo', item_id=item[0]) }}" alt="" style="max-width: 100%; height: auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="card-footer">
+                            <a href="/home" class="btn btn-danger">Geri</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </body>
+
+
+{% endblock %}

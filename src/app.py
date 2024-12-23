@@ -1,5 +1,8 @@
+import os
+import io
+
 from database_manager import DatabaseManager
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, send_file
 
 db_manager = DatabaseManager()
 
@@ -7,6 +10,9 @@ customerID = 0
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -93,7 +99,8 @@ def buy_item_from_suppliers():
 
 @app.route("/inventory_control")
 def inventory_control():
-    return render_template("pages/inventory.html")
+    items = db_manager.check_items()
+    return render_template("pages/inventory.html", items=items)
 
 
 @app.route("/get_data", methods=["POST"])
@@ -135,6 +142,25 @@ def create_order():
     quantity = request.form.get("quantity")
     db_manager.sell_item(int(item_id), int(quantity), int(customer_id))
     return render_template('pages/success.html')
+
+
+@app.route('/photo/<int:item_id>')
+def get_photo(item_id):
+    photo = db_manager.get_item_image(int(item_id))
+    if photo is None:
+        return "Fotoğraf bulunamadı", 404
+    return send_file(
+        io.BytesIO(photo[0]),
+        mimetype='image/jpeg',
+        as_attachment=False
+    )
+
+
+@app.route('/show-item')
+def show_item():
+    item_id = request.args.get('item_id')
+    item = db_manager.get_items(int(item_id))
+    return render_template('pages/show-item.html', item=item)
 
 
 if __name__ == "__main__":

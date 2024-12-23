@@ -92,10 +92,16 @@ class DatabaseManager:
         return values
 
     def check_items(self):
-        query: str = f"SELECT * FROM Item;"
+        query: str = f"SELECT * FROM Item order by item_id;"
         self.cursor.execute(query)
         values: list = self.cursor.fetchall()
         return values
+
+    def get_items(self, item_id) -> list:
+        query: str = f"SELECT * FROM Item WHERE item_id = {item_id} order by item_id;"
+        self.cursor.execute(query)
+        value= self.cursor.fetchone()
+        return value
 
     def get_item_id_name_price(self):
         query: str = f"SELECT item_id, name, price FROM Item;"
@@ -133,6 +139,12 @@ class DatabaseManager:
 
     def add_customer(self, name: str, second_name: str, address: str, phone: str, email: str, image: str):
         self.add_to_table("Customer", [name, second_name, address, phone, email, image])
+
+    def get_item_image(self, item_id: int):
+        query: str = f"SELECT image FROM Item WHERE item_id = {item_id};"
+        self.cursor.execute(query)
+        value = self.cursor.fetchone()
+        return value
 
     def login(self, customer_id: int):
         query = f"SELECT Customer_ID FROM Customer WHERE Customer_ID = {customer_id};"
