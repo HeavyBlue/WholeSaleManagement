@@ -53,7 +53,8 @@ def customer_debts():
 @app.route("/monthly_profit")
 def monthly_profit():
     profit = db_manager.monthly_profit()
-    return render_template("pages/monthly-profit.html", item=profit)
+    filtered_data = [item for item in profit if all(x is not None for x in item)]
+    return render_template("pages/monthly-profit.html", item=filtered_data)
 
 
 @app.route("/most_profitable")
