@@ -63,9 +63,10 @@ def profitable_item():
     return render_template("pages/profit.html", item=item)
 
 
-@app.route("/create_customer")
-def create_customer():
-    return render_template("pages/create-customer.html")
+@app.route("/customer-list")
+def customer_list():
+    customers = db_manager.get_customer()
+    return render_template("pages/customer-list.html" , items=customers)
 
 
 @app.route("/create_supplier")
@@ -97,6 +98,7 @@ def buy_item_from_suppliers():
     supp_item_id = request.args.get('supp_item_id')
     item = db_manager.get_suppliers_item_info(int(supp_item_id))
     return render_template("pages/supp-items-buy.html", item=item[0])
+
 
 @app.route("/inventory_control")
 def inventory_control():
@@ -163,6 +165,24 @@ def show_item():
     item = db_manager.get_items(int(item_id))
     return render_template('pages/show-item.html', item=item)
 
+
+@app.route('/show-customer')
+def show_customer():
+    customer_id = request.args.get('customer_id')
+    customer = db_manager.get_customer_info(int(customer_id))
+    return render_template('pages/show-customer.html', item=customer)
+
+
+@app.route('/customer-photo/<int:customer_id>')
+def customer_photo(customer_id):
+    photo = db_manager.get_customer_image(int(customer_id))
+    if photo is None:
+        return "Fotoğraf bulunamadı", 404
+    return send_file(
+        io.BytesIO(photo[0]),
+        mimetype='image/jpeg',
+        as_attachment=False
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
