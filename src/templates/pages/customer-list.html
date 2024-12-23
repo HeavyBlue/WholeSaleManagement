@@ -37,7 +37,12 @@
                                         <td>{{ i[3] }}</td>
                                         <td>{{ i[4] }}</td>
                                         <td>{{ i[5] }}</td>
-                                        <td><button class="btn btn-outline-primary" onclick="window.location.href='{{ url_for('show_customer',  customer_id=i[0]) }}'">Show Item and Photo</button></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary"
+                                                    onclick="window.location.href='{{ url_for('show_customer',  customer_id=i[0]) }}'">
+                                                Show Item and Photo
+                                            </button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

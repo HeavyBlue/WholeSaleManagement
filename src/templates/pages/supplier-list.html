@@ -7,23 +7,24 @@
             <div class="d-flex justify-content-start ms-4 mb-4 mt-4">
                 <a href="/home" class="btn btn-danger btn-lg">Back</a>
             </div>
-            <h1 style="align-self: center">Suppliers' Item</h1>
+            <h1 style="align-self: center">Suppliers</h1>
             <div class="app-content"
                  style="display: flex; justify-content: center; align-items: start; min-height: 100vh;">
                 <div class="align-items-start" style="width: 70%;">
                     <div class="card mb-xxl-5">
                         <div class="card-header">
-                            <h3 class="card-title">Suppliers' Item List</h3>
+                            <h3 class="card-title">Suppliers List</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Supplier Id</th>
-                                    <th>Item Id</th>
-                                    <th>Price</th>
-                                    <th>Buy</th>
+                                    <th>Supplier First Name</th>
+                                    <th>Supplier Second Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,12 +34,8 @@
                                         <td>{{ i[1] }}</td>
                                         <td>{{ i[2] }}</td>
                                         <td>{{ i[3] }}</td>
-                                        <td>
-                                            <button class="btn btn-outline-success pay-btn"
-                                                    onclick="window.location.href='{{ url_for('buy_item_from_suppliers',  supp_item_id=i[0]) }}'"
-                                                    data-item-id="{{ i[0] }}">Buy
-                                            </button>
-                                        </td>
+                                        <td>{{ i[4] }}</td>
+                                        <td>{{ i[5] }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

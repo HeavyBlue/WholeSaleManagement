@@ -14,6 +14,7 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     global customerID
@@ -66,12 +67,13 @@ def profitable_item():
 @app.route("/customer-list")
 def customer_list():
     customers = db_manager.get_customer()
-    return render_template("pages/customer-list.html" , items=customers)
+    return render_template("pages/customer-list.html", items=customers)
 
 
-@app.route("/create_supplier")
-def create_supplier():
-    return render_template("pages/create-supplier.html")
+@app.route("/supplier-list")
+def supplier_list():
+    suppliers = db_manager.get_supplier()
+    return render_template("pages/supplier-list.html", items=suppliers)
 
 
 @app.route("/payment")
@@ -183,6 +185,7 @@ def customer_photo(customer_id):
         mimetype='image/jpeg',
         as_attachment=False
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

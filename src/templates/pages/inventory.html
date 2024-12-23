@@ -33,7 +33,12 @@
                                         <td>{{ i[1] }}</td>
                                         <td>{{ i[2] }}</td>
                                         <td>{{ i[3] }}</td>
-                                        <td><button class="btn btn-outline-primary" onclick="window.location.href='{{ url_for('show_item',  item_id=i[0]) }}'">Show Item and Photo</button></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary"
+                                                    onclick="window.location.href='{{ url_for('show_item',  item_id=i[0]) }}'">
+                                                Show Item and Photo
+                                            </button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

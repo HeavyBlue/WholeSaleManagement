@@ -39,7 +39,7 @@ class DatabaseManager:
         if table_name == "Orders":
             if "payment_id" in column_variables:
                 column_variables.remove("payment_id")
-        print(column_variables,values)
+        print(column_variables, values)
         query_req1: str = ("%s, " * (len(column_variables) - 1))[:-2]
         col_names: str = ','.join(column_variables[1:])
         add_query = f"INSERT INTO {table_name} ({col_names}) VALUES ({query_req1})"
@@ -102,16 +102,16 @@ class DatabaseManager:
     def get_items(self, item_id):
         query: str = f"SELECT * FROM Item WHERE item_id = {item_id} order by item_id;"
         self.cursor.execute(query)
-        value= self.cursor.fetchone()
+        value = self.cursor.fetchone()
         return value
 
-    def get_customer_info(self, customer_id: int)   :
+    def get_customer_info(self, customer_id: int):
         query: str = f"SELECT * FROM customer WHERE customer_id = {customer_id};"
         self.cursor.execute(query)
         value = self.cursor.fetchone()
         return value
 
-    def get_customer_image(self, customer_id: int)   :
+    def get_customer_image(self, customer_id: int):
         query: str = f"SELECT image FROM customer WHERE customer_id = {customer_id};"
         self.cursor.execute(query)
         value = self.cursor.fetchone()
@@ -173,3 +173,9 @@ class DatabaseManager:
             return True
         else:
             return False
+
+    def get_supplier(self):
+        query: str = f"SELECT * FROM Supplier;"
+        self.cursor.execute(query)
+        values: list = self.cursor.fetchall()
+        return values
